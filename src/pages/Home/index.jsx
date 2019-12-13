@@ -1,5 +1,5 @@
 import React from 'react';
-import AllGifs from '../../main/components/Allgifs/index.jsx';
+import AllGifs from '../../main/components/Allgifs';
 
 const Home = () => {
   return (
