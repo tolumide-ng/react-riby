@@ -8,7 +8,7 @@ module.exports = {
     main: './src/index.js',
   },
   resolve: {
-    extensions: ['.jsx', '.js'],
+    extensions: ['.jsx', '.js', '.scss'],
   },
   plugins: [
     new Dotenv(),
@@ -38,14 +38,37 @@ module.exports = {
         },
       },
       {
-        test: /\.(css|scss|sass)/i,
+        test: /\.scss$/,
+        exclude: /node_modules/,
         use: [
-          'style-loader',
-          { loader: 'css-loader', options: { sourceMap: true } },
-          { loader: 'sass-loader', options: { sourceMap: true } },
-          'postcss-loader',
+          {
+            loader: 'style-loader',
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+            },
+          },
+          {
+            loader: 'postcss-loader',
+          },
         ],
       },
+      // {
+      //   test: /\.(css|scss|sass)/i,
+      //   use: [
+      //     'style-loader',
+      //     { loader: 'css-loader', options: { sourceMap: true } },
+      //     { loader: 'sass-loader', options: { sourceMap: true } },
+      //     {
+      //       loader: 'postcss-loader',
+      //       options: {
+      //         ident: 'postcss',
+      //       },
+      //     },
+      //   ],
+      // },
     ],
   },
 };

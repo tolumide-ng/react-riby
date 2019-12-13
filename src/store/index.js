@@ -5,6 +5,9 @@ import rootReducer from './modules';
 
 const middlewares = applyMiddleware(ReduxThunk);
 
-const store = createStore(rootReducer, composeWithDevTools);
+const store = createStore(
+  rootReducer,
+  composeWithDevTools(middlewares),
+);
 
 export default store;
