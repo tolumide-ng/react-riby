@@ -6,7 +6,7 @@ const {
   DETAILEDGIF_SUCCESS,
 } = actionTypes;
 
-const initialState = {
+export const initialState = {
   detailedGifStatus: 'rest',
   detailedGifError: null,
   detailedGif: {},
