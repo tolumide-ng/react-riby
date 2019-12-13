@@ -39,9 +39,12 @@ export const fetchAllGifAction = ({
 }) => async dispatch => {
   dispatch(fetchAllGifsPending());
   try {
-    const response = await axiosCall({ path: '/', method: 'GET' });
-    console.log('this is the response from the server', response);
+    const response = await axiosCall({
+      path: `/trending?api_key=rBH9uuUQzYfxNwXwbhbcQEFTRE46Yp3W&limit=25&rating=G`,
+      method: 'GET',
+    });
+    return dispatch(fetchAllGifSuccess(response.data));
   } catch (error) {
-    dispatch(fetchAllGifFailure(error));
+    return dispatch(fetchAllGifFailure(error));
   }
 };

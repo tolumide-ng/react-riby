@@ -5,10 +5,10 @@ export const axiosCall = async ({
   payload,
   method,
   contentType,
+  change = false,
 }) => {
-  const url = `${process.env.BASE_URL}${path}`;
+  const url = change ? path : `${process.env.BASE_URL}${path}`;
   const headers = {
-    'x-access-token': localStorage.token,
     'Content-Type': contentType || 'application/json',
   };
   const axiosdata = {

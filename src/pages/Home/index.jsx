@@ -1,9 +1,10 @@
 import React from 'react';
+import AllGifs from '../../main/components/Allgifs';
 
 const Home = () => {
   return (
-    <div>
-      <p>The Home Page</p>
+    <div className="w-full">
+      <AllGifs />
     </div>
   );
 };
