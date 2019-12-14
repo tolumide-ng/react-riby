@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { fetchAllGifAction } from '../../../store/modules/allGifs/actions';
-import SingleGif from '../SingleGif/index.jsx';
+const SingleGif = lazy(() => import('../SingleGif/index.jsx'));
 import Loader from '../Loader';
+import fallbackImage from '../../../../assets/default.png';
 
 const AllGifs = ({
   fetchAllGifs,
@@ -16,7 +17,7 @@ const AllGifs = ({
     fetchAllGifs({ history });
   }, []);
   return (
-    <div className="w-full flex flex-row flex-wrap mx-auto justify-center">
+    <div className="w-full flex flex-row flex-wrap mx-auto justify-center pt-20">
       {allGifStatus === 'pending' && (
         <div className="mt-20" data-testid="pageloading">
           <Loader />
@@ -24,12 +25,14 @@ const AllGifs = ({
       )}
       {allGifStatus === 'success' &&
         allGifs.map(gif => (
-          <SingleGif
-            imgSrc={gif.images.original.url}
-            title={gif.title}
-            key={gif.slug}
-            id={gif.id}
-          />
+          <Suspense fallback={fallbackImage} key={gif.id}>
+            <SingleGif
+              imgSrc={gif.images.original.url}
+              title={gif.title}
+              key={gif.slug}
+              id={gif.id}
+            />
+          </Suspense>
         ))}
     </div>
   );

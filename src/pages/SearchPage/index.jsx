@@ -1,12 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, lazy, Suspense } from 'react';
 import { connect } from 'react-redux';
 import SearchBar from '../../main/components/SearchBar';
-import SingleGif from '../../main/components/SingleGif';
+import fallbackImage from '../../../assets/default.png';
+const SingleGif = lazy(() =>
+  import('../../main/components/SingleGif'),
+);
 import { searchGifAction } from '../../store/modules/searchGif/actions';
 import Loader from '../../main/components/Loader';
-import Button from '../../main/components/Button'
+const Button = lazy(() => import('../../main/components/Button'));
 
-const SearchPage = ({ searchResult, searchStatus, searchError, searchGifs }) => {
+const SearchPage = ({
+  searchResult,
+  searchStatus,
+  searchError,
+  searchGifs,
+}) => {
   const [offset, setOffset] = useState(0);
   const [searchText, setSearchText] = useState('');
   useEffect(() => {
@@ -16,10 +24,10 @@ const SearchPage = ({ searchResult, searchStatus, searchError, searchGifs }) => 
   const handlePagination = e => {
     const { name } = e.target;
     if (name === 'next') {
-      return setOffset(offset => (offset +=1));
+      return setOffset(offset => (offset += 1));
     }
     if (name === 'previous' && offset !== 1) {
-      setOffset(offset => (offset -=1));
+      setOffset(offset => (offset -= 1));
     }
   };
   return (
@@ -36,29 +44,47 @@ const SearchPage = ({ searchResult, searchStatus, searchError, searchGifs }) => 
           There are no results for this search, try something new?
         </p>
       )}
-      {searchStatus === 'pending' && <div className='mt-20'> <Loader /> </div>}
+      {searchStatus === 'pending' && (
+        <div className="mt-20">
+          {' '}
+          <Loader />{' '}
+        </div>
+      )}
       {searchStatus === 'success' && searchResult.data.length > 1 && (
         <div className="w-full flex flex-wrap justify-center items-center mt-10">
           {searchResult.data.map(result => (
-            <SingleGif
-              key={result.id}
-              imgSrc={result.images.original.url}
-              title={result.title}
-              id={result.id}
-            />
+            <Suspense fallback={fallbackImage} key={result.id}>
+              <SingleGif
+                key={result.id}
+                imgSrc={result.images.original.url}
+                title={result.title}
+                id={result.id}
+              />
+            </Suspense>
           ))}
           {searchStatus === 'success' &&
             searchResult.data.length > 1 && (
               <div className="w-full flex px-2 justify-between mb-4 items-end">
-                <Button
-                  classes={`bg-blue-500 px-2 py-1 text-white ${offset ===
-                    0 && 'invisible'}`}
-                  type="button"
-                  name="previous"
-                  onClick={handlePagination}
-                  title='Prev Page'
-                />
-                <Button type='button' classes='bg-blue-500 px-2 py-1 text-white' name='next' onClick={handlePagination} title='Next Page' />
+                <Suspense fallback={<div>Loading...</div>}>
+                  <Button
+                    classes={`bg-blue-500 px-2 py-1 text-white ${offset ===
+                      0 && 'invisible'}`}
+                    type="button"
+                    name="previous"
+                    onClick={handlePagination}
+                    title="Prev Page"
+                  />
+                </Suspense>
+
+                <Suspense fallback={<div>Loading...</div>}>
+                  <Button
+                    type="button"
+                    classes="bg-blue-500 px-2 py-1 text-white"
+                    name="next"
+                    onClick={handlePagination}
+                    title="Next Page"
+                  />
+                </Suspense>
               </div>
             )}
         </div>
