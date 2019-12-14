@@ -1,6 +1,5 @@
 const path = require('path');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const MiniCssExtractWebpackPlugin = require('mini-css-extract-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const glob = require('glob');
 const PurgecssPlugin = require('purgecss-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
@@ -14,31 +13,44 @@ const PATHS = {
 module.exports = {
   mode: 'production',
   output: {
-    filename: '[name].[contentHash].bundle.js',
-    path: path.resolve(__dirname, '../dist'),
+    filename: 'index.js',
+    path: path.resolve(__dirname, '../public'),
     publicPath: '/',
   },
   plugins: [
-    new MiniCssExtractWebpackPlugin({
-      filename: '[name].[contentHash].css',
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, '../src', 'index.html'),
     }),
-    new PurgecssPlugin({
-      paths: glob.sync(`${PATHS.src}/**/*`, { nodir: true }),
+    new MiniCssExtractPlugin({
+      filename: './index.css',
+      chunkFilename: '[id].css',
     }),
-    new CleanWebpackPlugin(),
   ],
   optimization: {
     minimizer: [
-      new OptimizeCssAssetsPlugin(),
       new TerserPlugin(),
-      new HtmlWebpackPlugin({
-        template: './src/index.html',
-        minify: {
-          removeAttributeQuotes: true,
-          collapseWhitespace: true,
-          removeComments: true,
-        },
-      }),
+      new OptimizeCssAssetsPlugin(),
+      // new HtmlWebpackPlugin({
+      //   template: './src/index.html',
+      //   minify: {
+      //     removeAttributeQuotes: true,
+      //     collapseWhitespace: true,
+      //     removeComments: true,
+      //   },
+      // }),
+    ],
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(css|scss|sass)/i,
+        use: [
+          { loader: MiniCssExtractPlugin.loader },
+          { loader: 'css-loader', options: { sourceMap: true } },
+          'postcss-loader',
+          { loader: 'sass-loader', options: { sourceMap: true } },
+        ],
+      },
     ],
   },
 };
