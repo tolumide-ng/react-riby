@@ -4,6 +4,7 @@ import SearchBar from '../../main/components/SearchBar';
 import SingleGif from '../../main/components/SingleGif';
 import { searchGifAction } from '../../store/modules/searchGif/actions';
 import Loader from '../../main/components/Loader';
+import Button from '../../main/components/Button'
 
 const SearchPage = ({ searchResult, searchStatus, searchError, searchGifs }) => {
   const [offset, setOffset] = useState(0);
@@ -49,24 +50,15 @@ const SearchPage = ({ searchResult, searchStatus, searchError, searchGifs }) => 
           {searchStatus === 'success' &&
             searchResult.data.length > 1 && (
               <div className="w-full flex px-2 justify-between mb-4 items-end">
-                <button
-                  className={`bg-blue-400 px-2 py-1 text-white ${offset ===
+                <Button
+                  classes={`bg-blue-500 px-2 py-1 text-white ${offset ===
                     0 && 'invisible'}`}
                   type="button"
                   name="previous"
                   onClick={handlePagination}
-                >
-                  Prev Page
-                </button>
-
-                <button
-                  type="button"
-                  className="bg-blue-400 px-2 py-1 text-white"
-                  name="next"
-                  onClick={() => setOffset(offset + 1)}
-                >
-                  Next Page
-                </button>
+                  title='Prev Page'
+                />
+                <Button type='button' classes='bg-blue-500 px-2 py-1 text-white' name='next' onClick={handlePagination} title='Next Page' />
               </div>
             )}
         </div>

@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AllGifs component Should render loader when allGifStatus is pending 1`] = `[Function]`;
+
+exports[`AllGifs component Should render the allGifs component 1`] = `[Function]`;

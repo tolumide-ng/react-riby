@@ -2,13 +2,14 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchDetailedGifAction } from '../../store/modules/detailedGif/actions';
+import Loader from '../../main/components/Loader';
 
 const DetailedGif = ({
   location,
   fetchDetailedGif,
-  detailedGif,
-  detailedGifError,
+  detailedGif = {},
   detailedGifStatus,
+  history,
 }) => {
   useEffect(() => {
     fetchDetailedGif({ history, id: location.pathname });
@@ -19,7 +20,11 @@ const DetailedGif = ({
         <Link to="/" className="mb-4">
           Go Home
         </Link>
-        {detailedGifStatus === 'pending' && <div>Loading</div>}
+        {detailedGifStatus === 'pending' && (
+          <div data-testid="pageloading" className="mt-20">
+            <Loader />
+          </div>
+        )}
       </div>
 
       {detailedGifStatus === 'success' && (
@@ -31,26 +36,26 @@ const DetailedGif = ({
               detailedGif.images.original &&
               detailedGif.images.original.url
             }
-            alt={detailedGif.title}
+            alt={detailedGif && detailedGif.title}
             className="object-cover"
             style={{ height: '600px' }}
           />
           <div className="w-9/12 mt-2">
             <div className="flex">
               <strong className="mr-2">Title: </strong>
-              <p>{detailedGif.title}</p>
+              <p>{detailedGif && detailedGif.title}</p>
             </div>
             <div className="flex">
               <strong className="mr-2">Rating: </strong>
-              <p>{detailedGif.rating}</p>
+              <p>{detailedGif && detailedGif.rating}</p>
             </div>
             <div className="flex">
               <strong className="mr-2">Source: </strong>
-              <p>{detailedGif.source}</p>
+              <p>{detailedGif && detailedGif.source}</p>
             </div>
             <div className="flex">
               <strong className="mr-2">Username: </strong>
-              <p>{detailedGif.username}</p>
+              <p>{detailedGif && detailedGif.username}</p>
             </div>
           </div>
         </div>

@@ -18,7 +18,9 @@ const AllGifs = ({
   return (
     <div className="w-full flex flex-row flex-wrap mx-auto justify-center">
       {allGifStatus === 'pending' && (
-       <div className='mt-20'> <Loader /> </div>
+        <div className="mt-20" data-testid="pageloading">
+          <Loader />
+        </div>
       )}
       {allGifStatus === 'success' &&
         allGifs.map(gif => (

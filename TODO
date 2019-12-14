@@ -1,3 +1,4 @@
 
 Todo:
   ☐ Remember to change the keys within the axioscall into .env keys
+  Make Image a reusable component and buttons too, add pagination for major render page
