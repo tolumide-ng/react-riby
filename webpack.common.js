@@ -37,38 +37,6 @@ module.exports = {
           },
         },
       },
-      {
-        test: /\.scss$/,
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: 'style-loader',
-          },
-          {
-            loader: 'css-loader',
-            options: {
-              importLoaders: 1,
-            },
-          },
-          {
-            loader: 'postcss-loader',
-          },
-        ],
-      },
-      // {
-      //   test: /\.(css|scss|sass)/i,
-      //   use: [
-      //     'style-loader',
-      //     { loader: 'css-loader', options: { sourceMap: true } },
-      //     { loader: 'sass-loader', options: { sourceMap: true } },
-      //     {
-      //       loader: 'postcss-loader',
-      //       options: {
-      //         ident: 'postcss',
-      //       },
-      //     },
-      //   ],
-      // },
     ],
   },
 };
