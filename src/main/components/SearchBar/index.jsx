@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { searchGifAction } from '../../../store/modules/searchGif/actions';
+import Button from '../Button';
 
 const SearchBar = ({
   history,
@@ -23,7 +24,7 @@ const SearchBar = ({
   };
 
   return (
-    <div className="w-full mt-10 flex items-center justify-center">
+    <div className="w-full mt-20 flex items-center justify-center">
       <form
         onSubmit={handleSubmit}
         className="flex w-10/12 items-center justify-center items-center"
@@ -32,19 +33,19 @@ const SearchBar = ({
           value={searchText}
           onChange={handleChange}
           className="border w-7/12 px-2 py-1"
+          placeholder="search here"
+          data-testid="inputBox"
         />
-        <button
+        <Button
           type="submit"
           title="Search"
           disabled={searchGifStatus === 'pending'}
-          className={`text-white px-2 py-1 ${
+          classes={`text-white px-2 py-1 ${
             searchGifStatus === 'pending'
-              ? 'bg-brown-300'
+              ? 'bg-yellow-600'
               : 'bg-blue-500 '
           }`}
-        >
-          Search
-        </button>
+        />
       </form>
     </div>
   );
@@ -52,7 +53,7 @@ const SearchBar = ({
 
 const mapStateToProps = state => ({
   searchResult: state.searchGifReducer.searchGifResult,
-  searchStatus: state.searchGifReducer.searchGifStatus,
+  searchGifStatus: state.searchGifReducer.searchGifStatus,
   searchError: state.searchGifReducer.searchError,
 });
 

@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DetailedGif Page DetailedGif Page should render loading if detailed status is pending 1`] = `[Function]`;
+
+exports[`DetailedGif Page Should render the Detailed Gif Page 1`] = `[Function]`;
