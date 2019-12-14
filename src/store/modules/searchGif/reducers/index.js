@@ -6,7 +6,7 @@ const {
   SEARCHGIFS_SUCCESS,
 } = actionTypes;
 
-const initialState = {
+export const initialState = {
   searchGifStatus: 'rest',
   searchGifError: null,
   searchGifResult: [],

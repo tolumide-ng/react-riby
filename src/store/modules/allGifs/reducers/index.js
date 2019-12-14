@@ -1,4 +1,4 @@
-import actionTypes from '../actionTypes';
+import { actionTypes } from '../actionTypes';
 
 const {
   ALLGIFS_FAILURE,
@@ -6,7 +6,7 @@ const {
   ALLGIFS_SUCCESS,
 } = actionTypes;
 
-const initialState = {
+export const initialState = {
   allGifStatus: 'rest',
   allGifError: null,
   allGif: [],
