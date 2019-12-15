@@ -3,7 +3,7 @@
 
 # react-riby
 
-[https://reactriby.tolumide.now.sh/#/search](View the application live)
+[View the application live](https://reactriby.tolumide.now.sh/#/search)
 
 Deployed with love via
 
